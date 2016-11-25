@@ -233,11 +233,11 @@ check_object <- function(x){
     }
 }
 ##################################################################################################
-plot_dygraph <- function(ts1,output,forecasted_periods){
-    selected_model <- output[["model"]][[1]]
+plot_dygraph <- function(ts1,output_model,forecasted_periods){
+    selected_model <- output_model[["model"]][[1]]
     selected_model <- forecast(selected_model,h=forecasted_periods)
     selected_model
-    model_name <- names(output[["selected"]])
+    model_name <- names(output_model[["selected"]])
     title_name <- paste0("Predicted Time Series using ", model_name , " model ")
     title_name
 
@@ -251,12 +251,5 @@ plot_dygraph <- function(ts1,output,forecasted_periods){
     ts1_xts;predicted_mts
     all <- cbind(ts1_xts, predicted_mts)
     all
-    
-    dygraph(all, main = title_name) %>%
-        dyAxis("x", drawGrid = FALSE) %>%
-        dySeries("original", label = "Actual") %>%
-        dySeries(c("lwr", "fit", "upr"), 
-                 label = "predictions") %>%
-        dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
-        dyRangeSelector()
+ 
 }

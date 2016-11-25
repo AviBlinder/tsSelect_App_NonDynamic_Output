@@ -14,26 +14,31 @@ input1 <- c(2787, 3891, 3179, 2011, 1636, 1580 ,1489, 1300 ,1356, 1653 ,2013, 28
 shinyServer(function(input, output) {
     
     
-    
-    output$ts_input_out <- renderPrint({ 
+    output$dygraph <- renderDygraph({
+
         input_vector <- unlist(strsplit(input$ts_input,","))
         input_vector  <- trimws(input_vector,which = "both")   
         
         if (length(input_vector) > 10){
-            ts_object <- create_ts(as.numeric(input_vector))            
+            ts_object <- create_ts(input_data = as.numeric(input_vector),
+                                   start_date = as.Date(input$date),
+                                   frequency_date = as.numeric(input$Frequency))
         }
-
-        ts_object
-#        time_series <- create_ts(input_vector,input$date,input$Slider)
+        out_model <- run_models(ts1 = ts_object,
+                                accuracy_measure = NULL)
         
-#        input_vector 
-        })
-    
-    output$distPlot <- renderPlot({
-        x    <- faithful[, 2]  # Old Faithful Geyser data
-        bins <- seq(min(x), max(x), length.out = input$Slider + 1)
+        selected_model <- out_model[["model"]][[1]]
         
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+        all <- plot_dygraph(ts_object,out_model,input$Slider)
+        
+        dygraph(all, main = title_name) %>%
+            dyAxis("x", drawGrid = FALSE) %>%
+            dySeries("original", label = "Actual") %>%
+            dySeries(c("lwr", "fit", "upr"), 
+                     label = "predictions") %>%
+            dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
+            dyRangeSelector()
+        
+        
     })
 })

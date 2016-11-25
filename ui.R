@@ -18,17 +18,25 @@ shinyUI(fluidPage(
                         max = 20, value = 10),
             
             textInput("ts_input", label = h3("Time Series input"), 
-                      value = "Enter the values, separated by space"),
+                      value = ""),
             
-            actionButton("action", label = "SUBMIT")
+            helpText("please select whether each number is a Yearly, Quarterly or Monthly observation"),
+            
+
+            radioButtons("Frequency", label = h3("Time Series's Frequency"),
+                         choices = list("Year" = 1, "Quarter" = 4, 
+                                        "Month" = 12),
+                         selected = 12),
+
+                        actionButton("action", label = "SUBMIT")
             
         ),
         
         # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("distPlot"),
+            plotOutput("distPlot")
             
-            verbatimTextOutput("ts_input_out")
+     #       verbatimTextOutput("ts_input_out")
         )
     )
 ))
