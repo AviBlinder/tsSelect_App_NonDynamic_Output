@@ -5,9 +5,6 @@
 # Values of 4 and 12 are assumed in (e.g.) print methods to imply a quarterly and monthly series respectively.
 
 rm(list=ls())
-library(lubridate)
-library(forecast)
-library(dygraphs)
 
 source("helpers.r")
 
@@ -20,13 +17,8 @@ t1
 
 out1 <- run_models(t1)
 out1
-plot_dygraph(t1,out1)
+plot_dygraph(t1,out1,10)
 
 
 start_date <- "2010-05-20"
-###
-start_date_part2 <- switch(frequency_date, 
-               "1" = lubridate::year(start_date),
-               "4" = lubridate::quarter(start_date),
-               "12" = lubridate::month(start_date)
-               )
+frequency_date <- 4

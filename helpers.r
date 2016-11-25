@@ -3,25 +3,29 @@ create_ts <- function(input_data,start_date = "2000-01-01",frequency_date = 12){
         stop ("invalid input")
     }
     
+    if(!frequency_date %in% c(1,4,12)){
+        stop ("invalid frequency")
+    }
+    
     start_date_formatted <- ymd(start_date)
     
     start_date_part1 <- year(start_date_formatted) 
-    start_date_part2 <- month(start_date_formatted)
+    
+    start_date_part2 <- switch(as.character(frequency_date), 
+                               "1" = lubridate::year(start_date),
+                               "4" = lubridate::quarter(start_date),
+                               "12" = lubridate::month(start_date)
+    )
+    
     ts(input_data,
        start=c(start_date_part1,
                start_date_part2),
        frequency = frequency_date)
 }
-
-#########
-# start_date <- "2010-12-01"
-# input_data <- input1
-# frequency_date = 12
-#########
-
+###################################################################################################
 run_models <- function(ts1,accuracy_measure = NULL){
     
-    check_object(ts1)
+#    check_object(ts1)
     
     ##Check Auto-Correlations
     acf <- Acf(ts1)
@@ -221,24 +225,17 @@ run_models <- function(ts1,accuracy_measure = NULL){
     list(selected = selected_model,
                       model=all_models[names(all_models) == names(selected_model)])
 }
-
-
-##################################################################################################
+###################################################################################################
 check_object <- function(x){
     
-    if (length(x) == 0 ) {
-        cat ("missing input variable")
-        stop("missing input")
-        
+    if (!exists(x) ) {
+        stop("missing input variable !")
     }
-    
 }
-
 ##################################################################################################
-
-plot_dygraph <- function(ts1,output){
+plot_dygraph <- function(ts1,output,forecasted_periods){
     selected_model <- output[["model"]][[1]]
-    selected_model <- forecast(selected_model,h=10)
+    selected_model <- forecast(selected_model,h=forecasted_periods)
     selected_model
     model_name <- names(output[["selected"]])
     title_name <- paste0("Predicted Time Series using ", model_name , " model ")
@@ -263,6 +260,3 @@ plot_dygraph <- function(ts1,output){
         dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
         dyRangeSelector()
 }
-
-
-
