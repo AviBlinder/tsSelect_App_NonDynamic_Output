@@ -1,8 +1,15 @@
+library(shiny)
+
+# Define UI for application that draws a histogram
 shinyUI(fluidPage(
-    titlePanel("Time Series Forecaset"),
     
+    # Application title
+    titlePanel("Hello Shiny!"),
+    
+    # Sidebar with a slider input for the number of bins
     sidebarLayout(
         sidebarPanel(
+            
             helpText("Forecast Time Series based on the best possible model."),
             
             dateInput("date", label = h3("Starting Date"), value = "2014-01-01"),
@@ -13,15 +20,20 @@ shinyUI(fluidPage(
             textInput("ts_input", label = h3("Time Series input"), 
                       value = "Enter the values, separated by space"),
             
-            actionButton("action", label = "SUBMIT")
+            actionButton("action", label = "SUBMIT"),
             
-            
-            ),
+            sliderInput("bins",
+                        "Number of bins:",
+                        min = 1,
+                        max = 50,
+                        value = 30)
+        ),
         
+        # Show a plot of the generated distribution
         mainPanel(
+            plotOutput("distPlot"),
             
-            
-            plotOutput("dyplot")
-            )
+            verbatimTextOutput("ts_input_out")
+        )
     )
 ))
