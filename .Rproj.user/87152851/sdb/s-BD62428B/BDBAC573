@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(lubridate)\nlibrary(xts)\n\n#nifty=ts2min\n\n\nnifty <- data.frame(price = round(rnorm(300,mean=950,sd=220),2))\n\ntime <- seq(from=ymd_hms(\"2014-02-28-09:00:00\"),to=ymd_hms(\"2014-03-19-23:00:01\"),by=\"hours\")\n\nrow.names(nifty) <- time[1:300]\nhead(nifty)\n\nnifty <- as.xts(nifty)\n##endpoints\n##Extract index values of a given xts object corresponding to the last observations \n# given a period specified by on\nx = endpoints(nifty,on=\"days\",k=1)\nnifty[x,]\nx = endpoints(nifty,on=\"hours\",k=1)\nnifty[x,]\nx = endpoints(nifty,on=\"weeks\",k=1)\nnifty[x,]\n\n##index\nhead(index(nifty))\n?indexFormat\nindexFormat(nifty) <- \"%d/%m/%Y %H:%M:%S\"\nhead(index(nifty))\nindexTZ(nifty) <- \"UCT\"\nindexTZ(nifty) <- \"Asia/Jerusalem\"\nhead(index(nifty))\n########\nx <- timeBasedSeq('2010-01-01/2010-01-02 12:00')\nhead(x)\nx <- xts(1:length(x), x)\nhead(x)\nx[.indexhour(x) %in% c(8,15) & .indexmin(x) %in% c(0:5,57:59)]\nindexFormat(x) <- \"%Y-%b-%d %H:%M:%OS3\"\nhead(x)\n\n#Number of Periods in Data\n#Usage\nnseconds(x)\nnminutes(x)\nnhours(x)\nndays(x)\nnweeks(x)\nnmonths(x)\nnquarters(x)\nnyears(x)\n\nperiodicity(nifty)\n\n##Extracting/Replacing the Class of an xts Index\n\n#Description\n\n#Generic functions to extract, replace, and format the class of the index of an xts object.\n\n#Usage\n\n## S3 method for class 'xts'\n#index(x, ...)\n## S3 replacement method for class 'xts'\n#index(x) <- value\n\n.index(x, ...)\n.index(x) <- value\n\nindexClass(x)\nindexClass(x) <- value\n\ntclass(x)\ntclass(x) <- value\n\nindexFormat(x)\nindexFormat(x) <- value\n\nconvertIndex(x,value)\n\n# time component extraction/conversion\n# \n# .indexDate(x)\n# \n# .indexday(x)\n# .indexmday(x)\n# .indexwday(x)\n# .indexweek(x)\n# .indexmon(x)\n# .indexyday(x)\n# .indexyear(x)\n# \n# .indexhour(x)\n# .indexmin(x)\n# .indexsec(x)\n\n## all obs. in the first 6 and last 3 minutes of the\n# 8th and 15th hours on each day\nx[.indexhour(x) %in% c(8,15) & .indexmin(x) %in% c(0:5,57:59)]",
+    "created" : 1480056619090.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "1179835164",
+    "id" : "BDBAC573",
+    "lastKnownWriteTime" : 140733193388032,
+    "last_content_update" : 1480056647815,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

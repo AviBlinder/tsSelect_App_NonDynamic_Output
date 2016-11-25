@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\n# one could use a value of 7 for frequency when the data are sampled daily, \n# and the natural time period is a week, \n# or 12 when the data are sampled monthly and the natural time period is a year. \n# Values of 4 and 12 are assumed in (e.g.) print methods to imply a quarterly and monthly series respectively.\n\nrm(list=ls())\nlibrary(lubridate)\nlibrary(forecast)\nlibrary(dygraphs)\n\nsource(\"helpers.r\")\n\ninput1 <- c(2787, 3891, 3179, 2011, 1636, 1580 ,1489, 1300 ,1356, 1653 ,2013, 2823,\n            2933, 2889, 2938, 2497, 1870, 1726, 1607, 1545, 1396, 1787, 2076 ,2837)\n\n\nt1 <- create_ts(input1,\"2010-05-20\",frequency_date = 4)\nt1\n\nout1 <- run_models(t1)\nout1\nplot_dygraph(t1,out1)\n\n\nstart_date <- \"2010-05-20\"\nfrequency_date <- 12\n###\nstart_date_part2 <- switch(as.character(frequency_date), \n               \"1\" = lubridate::year(start_date),\n               \"4\" = lubridate::quarter(start_date),\n               \"12\" = lubridate::month(start_date)\n               )\nstart_date_part2\n",
+    "created" : 1480013922877.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3760219644",
+    "id" : "41A270BF",
+    "lastKnownWriteTime" : 1480063703,
+    "last_content_update" : 1480063751840,
+    "path" : "~/DataScienceProjects/tsSelect_Shiny/main.r",
+    "project_path" : "main.r",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#http://rstudio.github.io/dygraphs/\n\ndygraph(predicted_mts, main = title_name) %>%\n    dyAxis(\"x\", drawGrid = FALSE) %>%\n    dySeries(\"ldeaths\", label = \"Actual\") %>%\n    dySeries(c(\"lwr\", \"fit\", \"upr\"), label = \"predictions\") %>%\n    dyOptions(colors = RColorBrewer::brewer.pal(3, \"Set1\"))\n# dyShading(from = mn - std, to = mn + std, axis = \"y\")\n#   dyOptions(fillGraph = TRUE, fillAlpha = 0.4)\n#   dyOptions(drawPoints = TRUE, pointSize = 2)\n\n##\nhw <- HoltWinters(ldeaths)\np <- predict(hw, n.ahead = 36, prediction.interval = TRUE)\nall <- cbind(ldeaths, p)\n\ndygraph(all, \"Deaths from Lung Disease (UK)\") %>%\n    dySeries(\"ldeaths\", label = \"Actual\") %>%\n    dySeries(c(\"p.lwr\", \"p.fit\", \"p.upr\"), label = \"Predicted\")\nldeaths\nstart(ldeaths)\nfrequency(ldeaths)\n##\n#Series Highligh\n# lungDeaths <- cbind(ldeaths, mdeaths, fdeaths)\n# dygraph(lungDeaths, main = \"Deaths from Lung Disease (UK)\") %>%\n#     dyHighlight(highlightCircleSize = 5, \n#                 highlightSeriesBackgroundAlpha = 0.2,\n#                 hideOnMouseOut = FALSE)\n#\n#dygraph(lungDeaths, main = \"Deaths from Lung Disease (UK)\") %>%\n#dyHighlight(highlightSeriesOpts = list(strokeWidth = 3))\n\n#Range Selector\n#dyRangeSelector()\n# dyRangeSelector(height = 20, strokeColor = \"\")\n#\n\n##\n#Shiny Date Input\n#\n#Shiny applications can respond to changes in the dateWindow via a special \n# date_window input value. \n# For example, if the output id of a dygraph is series then the current \n# date window can be read from \n# input$series_date_window as an array of two date values (from and to).\n\n#Note that when using the data window input variable you should always check for NULL before accessing it, for example:\n\noutput$from <- renderText({\n    if (!is.null(input$dygraph_date_window))\n        strftime(input$dygraph_date_window[[1]], \"%d %b %Y\")      \n})\n\n\n#Shading\ndygraph(nhtemp, main = \"New Haven Temperatures\") %>% \n    dyShading(from = \"1920-1-1\", to = \"1930-1-1\") %>%\n    dyShading(from = \"1940-1-1\", to = \"1950-1-1\")\n\ndygraph(nhtemp, main = \"New Haven Temperatures\") %>% \n    dySeries(label = \"Temp (F)\", color = \"black\") %>%\n    dyShading(from = \"1920-1-1\", to = \"1930-1-1\", color = \"#FFE6E6\") %>%\n    dyShading(from = \"1940-1-1\", to = \"1950-1-1\", color = \"#CCEBD6\")",
+    "created" : 1480017629123.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2075580293",
+    "id" : "B3BB72DB",
+    "lastKnownWriteTime" : 1480013492,
+    "last_content_update" : 1480013492,
+    "path" : "~/DataScienceProjects/tsSelect_Shiny/dygraphs_samples.r",
+    "project_path" : "dygraphs_samples.r",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
