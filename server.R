@@ -17,9 +17,17 @@ shinyServer(function(input, output) {
     
     output$ts_input_out <- renderPrint({ 
         input_vector <- unlist(strsplit(input$ts_input,","))
-        input_vector  <- trimws(input_vector,which = "both")        
+        input_vector  <- trimws(input_vector,which = "both")   
         
-        input_vector })
+        if (length(input_vector) > 10){
+            ts_object <- create_ts(as.numeric(input_vector))            
+        }
+
+        ts_object
+#        time_series <- create_ts(input_vector,input$date,input$Slider)
+        
+#        input_vector 
+        })
     
     output$distPlot <- renderPlot({
         x    <- faithful[, 2]  # Old Faithful Geyser data

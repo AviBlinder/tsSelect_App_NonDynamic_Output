@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "input1 <- c(\"2787, 3891, 3179, 2011, 1636, 1580 ,1489, 1300 ,1356, 1653 ,2013, 2823,\n            2933, 2889, 2938, 2497, 1870, 1726, 1607, 1545, 1396, 1787, 2076 ,2837\")\nlength(input1)\n\n\ninput_vector <- unlist(strsplit(input1,\",\"))\n",
+    "contents" : "input1 <- c(\"2787, 3891, 3179, 2011, 1636, 1580 ,1489, 1300 ,1356, 1653 ,2013, 2823,\n            2933, 2889, 2938, 2497, 1870, 1726, 1607, 1545, 1396, 1787, 2076 ,2837\")\n\n\n\ninput_vector <- unlist(strsplit(input1,\",\"))\n\ninput_vector  <- trimws(input_vector,which = \"both\")   \n\n\nts_object <- create_ts(as.numeric(input_vector))\nts_object\n\n\n",
     "created" : 1480101169105.000,
     "dirty" : true,
     "encoding" : "",
     "folds" : "",
-    "hash" : "3188795948",
+    "hash" : "2751394361",
     "id" : "E3C71B0F",
     "lastKnownWriteTime" : 32651299169435764,
-    "last_content_update" : 1480101290422,
+    "last_content_update" : 1480106296807,
     "path" : null,
     "project_path" : null,
     "properties" : {

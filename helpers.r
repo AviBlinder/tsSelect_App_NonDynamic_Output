@@ -1,5 +1,5 @@
 create_ts <- function(input_data,start_date = "2000-01-01",frequency_date = 12){
-    if(!is.numeric(input)){
+    if(!is.numeric(input_data)){
         stop ("invalid input")
     }
     

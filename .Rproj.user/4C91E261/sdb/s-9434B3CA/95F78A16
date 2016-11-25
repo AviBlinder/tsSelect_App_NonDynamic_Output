@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "library(shiny)\nlibrary(lubridate)\nlibrary(forecast)\nlibrary(xts)\nlibrary(dygraphs)\n\nsource(\"helpers.R\")\n\ninput1 <- c(2787, 3891, 3179, 2011, 1636, 1580 ,1489, 1300 ,1356, 1653 ,2013, 2823,\n            2933, 2889, 2938, 2497, 1870, 1726, 1607, 1545, 1396, 1787, 2076 ,2837)\n\n\n# Define server logic required to draw a histogram\nshinyServer(function(input, output) {\n    \n    \n    \n    output$ts_input_out <- renderPrint({ \n        input_vector <- unlist(strsplit(input$ts_input,\",\"))\n        input_vector  <- trimws(input_vector,which = \"both\")        \n        \n        input_vector })\n    \n    output$distPlot <- renderPlot({\n        x    <- faithful[, 2]  # Old Faithful Geyser data\n        bins <- seq(min(x), max(x), length.out = input$Slider + 1)\n        \n        # draw the histogram with the specified number of bins\n        hist(x, breaks = bins, col = 'darkgray', border = 'white')\n    })\n})",
+    "contents" : "library(shiny)\nlibrary(lubridate)\nlibrary(forecast)\nlibrary(xts)\nlibrary(dygraphs)\n\nsource(\"helpers.R\")\n\ninput1 <- c(2787, 3891, 3179, 2011, 1636, 1580 ,1489, 1300 ,1356, 1653 ,2013, 2823,\n            2933, 2889, 2938, 2497, 1870, 1726, 1607, 1545, 1396, 1787, 2076 ,2837)\n\n\n# Define server logic required to draw a histogram\nshinyServer(function(input, output) {\n    \n    \n    \n    output$ts_input_out <- renderPrint({ \n        input_vector <- unlist(strsplit(input$ts_input,\",\"))\n        input_vector  <- trimws(input_vector,which = \"both\")   \n        \n        if (length(input_vector) > 10){\n            ts_object <- create_ts(as.numeric(input_vector))            \n        }\n\n        ts_object\n#        time_series <- create_ts(input_vector,input$date,input$Slider)\n        \n#        input_vector \n        })\n    \n    output$distPlot <- renderPlot({\n        x    <- faithful[, 2]  # Old Faithful Geyser data\n        bins <- seq(min(x), max(x), length.out = input$Slider + 1)\n        \n        # draw the histogram with the specified number of bins\n        hist(x, breaks = bins, col = 'darkgray', border = 'white')\n    })\n})",
     "created" : 1480087627257.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "4083241777",
+    "hash" : "1645243156",
     "id" : "95F78A16",
-    "lastKnownWriteTime" : 1480101603,
-    "last_content_update" : 1480101603011,
+    "lastKnownWriteTime" : 1480106342,
+    "last_content_update" : 1480106342063,
     "path" : "D:/DataScienceProjects/tsSelect_app/server.R",
     "project_path" : "server.R",
     "properties" : {
