@@ -291,6 +291,5 @@ plot_dygraph <- function(ts1,output_model,forecasted_periods){
     colnames(ts1_xts) <- "original"
     ts1_xts;predicted_mts
     all <- cbind(ts1_xts, predicted_mts)
-    all
  
 }

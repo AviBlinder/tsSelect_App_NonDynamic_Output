@@ -1,4 +1,5 @@
 library(shiny)
+library(dygraphs)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -18,7 +19,7 @@ shinyUI(fluidPage(
                         max = 20, value = 10),
             
             textInput("ts_input", label = h3("Time Series input"), 
-                      value = ""),
+                      value = "0"),
             
             helpText("please select whether each number is a Yearly, Quarterly or Monthly observation"),
             
@@ -34,9 +35,10 @@ shinyUI(fluidPage(
         
         # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("dygraph_plot"),
+
+          dygraphOutput("dygraph_plot"),
             
-           verbatimTextOutput("ts_input_out")
+          verbatimTextOutput("ts_input_out")
         )
     )
 ))

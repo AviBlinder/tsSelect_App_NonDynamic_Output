@@ -23,4 +23,35 @@ out_model <- run_models(ts1 = ts_object,
 out_model[["selected_model_name"]]
 selected_model <- out_model[["model"]][[1]]
 
+###
+output_model <- out_model
+forecasted_periods <- 10
+selected_model <- output_model[["model"]][[1]]
+selected_model <- forecast(selected_model,h=forecasted_periods)
+
+model_name <- output_model[["selected_model_name"]]
+
+title_name <- paste0("Predicted Time Series using ", model_name , " model ")
+title_name
+
+predicted_mts <- as.xts(cbind(fit = selected_model[["mean"]],
+                              lwr = selected_model[["lower"]][,2],
+                              upr = selected_model[["upper"]][,2]))
+
+ts1_xts <- as.xts(ts1)
+ts1_xts
+colnames(ts1_xts) <- "original"
+ts1_xts;predicted_mts
+all <- cbind(ts1_xts, predicted_mts)
+all
+#####
+dygraph(all, main = title_name) %>%
+    dyAxis("x", drawGrid = FALSE) %>%
+    dySeries("original", label = "Actual") %>%
+    dySeries(c("lwr", "fit", "upr"),
+             label = "predictions") %>%
+    dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
+    dyRangeSelector()
+
+
 
