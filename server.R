@@ -4,7 +4,7 @@ library(forecast)
 library(xts)
 library(dygraphs)
 
-source("helpers.R")
+source("helpers.r")
 
 input_sample <- c("2787", "3891", "3179", "2011", "1636", "1580" ,"1489", 
             "1300" ,"1356", "1653" ,"2013", "2823", 
@@ -74,7 +74,10 @@ shinyServer(function(input, output) {
         
     })
     
-        
+    output$log_title <- renderText({
+        "Below is the log of the last execution"
+    })
+            
     output$ts_input_out <- renderPrint({ 
         predicted_preps()
         })
@@ -85,7 +88,7 @@ shinyServer(function(input, output) {
             dyAxis("x", drawGrid = FALSE) %>%
             dySeries("original", label = "Actual") %>%
             dySeries(c("lwr", "fit", "upr"),
-                     label = "predictions") %>%
+                     label = "Predictions") %>%
             dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
             dyRangeSelector()
         
