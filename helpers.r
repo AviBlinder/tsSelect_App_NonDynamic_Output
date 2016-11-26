@@ -12,7 +12,7 @@ create_ts <- function(input_data,start_date = "2000-01-01",frequency_date = 12){
     start_date_part1 <- year(start_date_formatted) 
     
     start_date_part2 <- switch(as.character(frequency_date), 
-                               "1" = lubridate::year(start_date),
+                               "1" = 1,
                                "4" = lubridate::quarter(start_date),
                                "12" = lubridate::month(start_date)
     )
@@ -45,42 +45,75 @@ run_models <- function(ts1,accuracy_measure = NULL){
     fit_tbats <- tbats(ts1)
     seasonal <- !is.null(fit_tbats$seasonal)
     
+    print ('running model 1 ')
+    print(fit_tbats[["fitted.values"]])
+    
     
     fit_benchm1 <- meanf(ts1,6)  # Mean forecast (x, h) h = horizon
+    print ("running model 2 ")
+    print(fit_benchm1[["fitted"]])
     
     fit_benchm2 <- naive(ts1,6)  # Navive forecast (all forecasts = last observation)
+    print ("running model 3 ")
+    print(fit_benchm2[["fitted"]])
     
     if(seasonal){
-        fit_benchm3 <- snaive(ts1,6) # Seassonal Naive
+        fit_benchm3 <- snaive(ts1,1) # Seassonal Naive
+        print ("running model 4 ")
+        print(fit_benchm3[["fitted"]])
         
         fit_lm2 <- tslm(ts1 ~ trend + season)
+        print ("running model 5 ")
+        print(fit_lm2[["fitted.values"]])
         
         fit_hw1    <- hw(ts1,seasonal="additive")
+        print ("running model 6 ")
+        print(fit_hw1[["fitted"]])
         
         fit_hw2    <- hw(ts1,seasonal="multiplicative")
-        
+        print ("running model 7 ")
+        print(fit_hw2[["fitted"]])
     }
 
     fit_benchm4 <- rwf(ts1,6,drift = TRUE) #Drift method - adds a "trend" over time to the naive method
+    print ("running model 8 ")
+    print(fit_benchm4[["fitted"]])
     
     fit_lm1 <- tslm(ts1 ~ trend)
+    print ("running model 9" )
+    print(fit_lm1[["fitted.values"]])
     
     fit_ses <- ses(ts1)
+    print ("running model 10 ")
+    print(fit_ses[["fitted"]])
     
     fit_ets <- ets(ts1)
+    print ("running model 11 ")
+    print(fit_ets[["fitted"]])
     
     fit_holt1 <- holt(ts1)
+    print ("running model 12 ")
+    print(fit_holt1[["fitted"]])
     
     fit_holt2 <- holt(ts1,exponental=TRUE)
+    print ("running model 13 ")
+    print(fit_holt2[["fitted"]])
     
     fit_holt3 <- holt(ts1,damped=TRUE)
+    print ("running model 14 ")
+    print(fit_holt3[["fitted"]])
     
     fit_holt4 <- holt(ts1,exponential=TRUE,damped=TRUE)
+    print ("running model 15 ")
+    print(fit_holt4[["fitted"]])
     
     fit_auto_arima1 <- auto.arima(ts1,stepwise=TRUE)
+    print ("running model 16 ")
+    print(fit_auto_arima1[["x"]]-fit_auto_arima1[["residuals"]])
     
     fit_auto_arima2 <-  auto.arima(ts1, stepwise=FALSE, approximation=FALSE)
-    
+    print ("running model 17 ")
+    print(fit_auto_arima2[["fitted"]])
     ##################################################################################
     #Step 2: Measure accuracies
     
@@ -161,6 +194,7 @@ run_models <- function(ts1,accuracy_measure = NULL){
     ac_auto_arima2$model <- "Auto_Arima_No_Stepwise"
     row.names(ac_auto_arima2) <- NULL
     
+    print ("end of step 2 (calculating accuracy of models")
     ##################################################################################
     #Step 3: Combine models and pick best one
     
@@ -207,6 +241,8 @@ run_models <- function(ts1,accuracy_measure = NULL){
         
     }
     
+    print ("all_models created")
+    
     if(is.null(accuracy_measure)){
         x2 <- c()
         for (i in 1:ncol(accuracies)){
@@ -222,7 +258,11 @@ run_models <- function(ts1,accuracy_measure = NULL){
         }
     }
     
-    list(selected = selected_model,
+    print ("accuracies : ")
+    print (accuracies)
+    print ("end of step 3 - selected model = ")
+    print (names(selected_model))
+    list(selected_model_name = names(selected_model),
                       model=all_models[names(all_models) == names(selected_model)])
 }
 ###################################################################################################
@@ -236,8 +276,9 @@ check_object <- function(x){
 plot_dygraph <- function(ts1,output_model,forecasted_periods){
     selected_model <- output_model[["model"]][[1]]
     selected_model <- forecast(selected_model,h=forecasted_periods)
-    selected_model
-    model_name <- names(output_model[["selected"]])
+    
+    model_name <- output_model[["selected_model_name"]]
+    
     title_name <- paste0("Predicted Time Series using ", model_name , " model ")
     title_name
 
