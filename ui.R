@@ -39,7 +39,8 @@ shinyUI(fluidPage(
                          choices = list(
 #                             "Year" = 1, 
                              "Quarter" = 4, 
-                              "Month" = 12),
+                              "Month" = 12,
+                             "Weekly" = 7),
                          selected = 12)
 
 #                        actionButton("action", label = "SUBMIT")
