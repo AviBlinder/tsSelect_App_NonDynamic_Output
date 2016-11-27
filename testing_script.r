@@ -10,13 +10,24 @@ input1 <- c("2787, 3891, 3179, 2011, 1636, 1580 ,1489, 1300 ,1356, 1653 ,2013, 2
             2933, 2889, 2938, 2497, 1870, 1726, 1607, 1545, 1396, 1787, 2076 ,2837")
 
 
+input1 <- c("160.35 ,161.64, 159.00, 155.69, 158.29 ,155.81, 154.05, 155.66 ,153.84, 154.87, 154.45 ,155.53, 156.11, 154.98, 153.98 ,156.77, 158.29, 158.11, 158.85, 157.61 ,156.46 ,157.08, 156.88, 155.67, 157.02, 154.79, 154.29, 153.72, 154.45, 154.77, 150.72, 151.26, 151.52, 149.63, 150.57, 150.88, 151.81, 153.35, 152.61, 153.69, 152.79, 151.95")
 
 input_vector <- unlist(strsplit(input1,","))
 
 input_vector  <- trimws(input_vector,which = "both")   
 
-ts_object <- create_ts(as.numeric(input_vector,"2010-10-10",frequency_date = 4))
-print(ts_object)
+ts_object <- create_ts(as.numeric(input_vector,"2010-10-10",frequency_date = 365.25))
+
+
+p1 <- year(as.Date("2010-10-10"))
+p2 <- week(as.Date("2010-10-10"))
+
+p1;p2
+
+rm(ts_object)
+ts_object <- ts(input_vector,
+   start=c(p1,p2),frequency = 7)
+ts_object
 
 out_model <- run_models(ts1 = ts_object,
                         accuracy_measure = NULL)
