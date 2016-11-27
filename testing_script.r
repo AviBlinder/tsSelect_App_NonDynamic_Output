@@ -15,18 +15,26 @@ input1 <- c("160.35 ,161.64, 159.00, 155.69, 158.29 ,155.81, 154.05, 155.66 ,153
 input_vector <- unlist(strsplit(input1,","))
 
 input_vector  <- trimws(input_vector,which = "both")   
+freq = 1
 
-ts_object <- create_ts(as.numeric(input_vector,"2010-10-10",frequency_date = 365.25))
+ts_object <- create_ts(as.numeric(input_vector),as.Date("2010-10-10"),
+                            frequency_date = 52)
+
+ts_object
+
+print(ts(as.numeric(input_vector),
+   start=c(2010,4),
+   frequency = 1),calendar = T)
 
 
-p1 <- year(as.Date("2010-10-10"))
-p2 <- week(as.Date("2010-10-10"))
-
+p1 <- year(as.Date("2010-01-01"))
+#p2 <- week(as.Date("2010-10-10"))
+p2 <- 1
 p1;p2
 
 rm(ts_object)
 ts_object <- ts(input_vector,
-   start=c(p1,p2),frequency = 7)
+   start=c(p1,p2),frequency = 1)
 ts_object
 
 out_model <- run_models(ts1 = ts_object,

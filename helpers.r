@@ -3,8 +3,8 @@ create_ts <- function(input_data,start_date = "2000-01-01",frequency_date = 12){
         stop ("invalid input")
     }
     
-    if(!frequency_date %in% c(1,4,12)){
-        stop ("invalid frequency")
+    if(!frequency_date %in% c(4,12)){
+        stop ("invalid frequency " ,frequency_date )
     }
     
     start_date_formatted <- ymd(start_date)
@@ -12,10 +12,10 @@ create_ts <- function(input_data,start_date = "2000-01-01",frequency_date = 12){
     start_date_part1 <- year(start_date_formatted) 
     
     start_date_part2 <- switch(as.character(frequency_date), 
-                               "1" = 1,
+#                               "1" = 1,
                                "4" = lubridate::quarter(start_date),
-                               "12" = lubridate::month(start_date),
-                               "7" = lubridate::week(start_date)
+                               "12" = lubridate::month(start_date)
+#                               "7" = lubridate::week(start_date)
     )
     
     ts(input_data,

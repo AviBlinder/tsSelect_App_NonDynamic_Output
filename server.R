@@ -32,6 +32,10 @@ shinyServer(function(input, output) {
 
 
 
+print ("Date : ")
+print (as.Date(input$date))
+print ("Frequency  ")
+print (as.numeric(input$Frequency))
 #Convert numbers into time series        
         if (length(input_vector) > 1){
             ts_object <- create_ts(
