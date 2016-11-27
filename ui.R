@@ -5,7 +5,8 @@ library(dygraphs)
 shinyUI(fluidPage(
     
     # Application title
-    titlePanel("Time Series Forecast by Selecting Best Possible Model"),
+#    titlePanel("Time Series Forecast by Selecting Best Possible Model"),
+    titlePanel(""),
     
     
     # Sidebar with a slider input for the number of bins
@@ -26,8 +27,8 @@ shinyUI(fluidPage(
                         max = 20, value = 10),
             
             br(),
-            p("Enter an array of numbers, separated by commas. 
-              Zero values are not allowed"),
+            p("Enter an array of numbers, separated by commas.") ,
+            p("Zero values are not allowed."),
  
             textInput("ts_input", label = h3("Time Series input"), 
                       value = "0"),
