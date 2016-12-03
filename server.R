@@ -3,6 +3,7 @@ library(lubridate)
 library(forecast)
 library(xts)
 library(dygraphs)
+library(shinythemes)
 
 source("helpers.r")
 

@@ -3,17 +3,17 @@ library(dygraphs)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
+      theme = shinytheme("cerulean"),
+#      theme = shinytheme("superhero"),
     
-    # Application title
-#    titlePanel("Time Series Forecast by Selecting Best Possible Model"),
-    titlePanel(""),
+       titlePanel(""),
     
     
     # Sidebar with a slider input for the number of bins
     sidebarLayout(
         sidebarPanel(
             
-            helpText("Forecast Time Series based on comparing among around 20 differet models."),
+#            helpText("Forecast Time Series based on comparing among around 20 differet models."),
             helpText("The first time the application is executed, a 
                      demo is performed."),
             helpText ("The process may take a few seconds..."),
