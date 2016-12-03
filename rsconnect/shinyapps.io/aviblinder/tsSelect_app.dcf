@@ -3,9 +3,9 @@ title:
 account: aviblinder
 server: shinyapps.io
 appId: 140283
-bundleId: 634768
+bundleId: 634793
 url: https://aviblinder.shinyapps.io/tsSelect_app/
-when: 1480788651.69665
+when: 1480791683.00528
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: dygraphs_samples.r|fourier_sample.r|main.r|testing_script.r|data/sales_data.txt|www/NA

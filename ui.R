@@ -26,8 +26,9 @@ shinyUI(fluidPage(
              h4("Time Series Frequency"),
              radioButtons("Frequency", label = "",
                           choices = list(
-                            "Quarterly" = 4, 
-                            "Monthly" = 12),
+                            "Monthly" = 12,
+                            "Quarterly" = 4 
+                            ),
                           selected = 12),
                h4("Time Series Input"),
                p("Enter an array of numbers, separated by commas.
