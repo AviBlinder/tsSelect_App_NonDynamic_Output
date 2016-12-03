@@ -15,10 +15,10 @@ input1 <- c("160.35 ,161.64, 159.00, 155.69, 158.29 ,155.81, 154.05, 155.66 ,153
 input_vector <- unlist(strsplit(input1,","))
 
 input_vector  <- trimws(input_vector,which = "both")   
-freq = 1
+freq = 12
 
 ts_object <- create_ts(as.numeric(input_vector),as.Date("2010-10-10"),
-                            frequency_date = 52)
+                            frequency_date = freq)
 
 ts_object
 

@@ -22,7 +22,7 @@ shinyUI(fluidPage(
              sliderInput("Slider",label="", min = 1, 
                          max = 20, value = 10)
       ),
-      column(8,
+      column(4,offset = 2,
              h4("Time Series Frequency"),
              radioButtons("Frequency", label = "",
                           choices = list(
@@ -30,8 +30,8 @@ shinyUI(fluidPage(
                             "Monthly" = 12),
                           selected = 12),
                h4("Time Series Input"),
-               p("Enter an array of numbers, separated by commas. 
-                 Zero values are not allowed.") ,
+               p("Enter an array of numbers, separated by commas.
+                   Zero values are not allowed.") ,
 
                textInput("ts_input",label=""), 
                value = "0"))
