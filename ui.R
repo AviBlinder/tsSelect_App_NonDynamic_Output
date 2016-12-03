@@ -1,5 +1,6 @@
 library(shiny)
 library(dygraphs)
+library(shinythemes)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
