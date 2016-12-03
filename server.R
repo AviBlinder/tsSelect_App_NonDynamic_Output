@@ -90,10 +90,10 @@ print (as.numeric(input$Frequency))
     output$dygraph_plot <- renderDygraph({
 
         dygraph(predicted(), main = "Actual and Predicted Results") %>%
-            dyAxis("x", drawGrid = FALSE) %>%
+            dyAxis("x", drawGrid = TRUE) %>%
             dySeries("original", label = "Actual") %>%
             dySeries(c("lwr", "fit", "upr"),
-                     label = "Predictions") %>%
+                     label = " Predicted") %>%
             dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
             dyRangeSelector()
         

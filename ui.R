@@ -15,21 +15,19 @@ shinyUI(fluidPage(
 
     fluidRow(
       column(4,
-             h4("Starting Date"),
+             h4("Starting Date of Time Series"),
              dateInput("date",  value = "2014-01-01",label=""),
              
-             h4("Forecasted Periods"),
+             h4("Number of Forecasted Periods"),
              sliderInput("Slider",label="", min = 1, 
                          max = 20, value = 10)
       ),
       column(8,
-             h4("T.S. Frequency"),
+             h4("Time Series Frequency"),
              radioButtons("Frequency", label = "",
                           choices = list(
-                            #                         "Year" = 1, 
-                            "Quarter" = 4, 
-                            "Month" = 12),
-                          #                         "Weekly" = 7),
+                            "Quarterly" = 4, 
+                            "Monthly" = 12),
                           selected = 12),
                h4("Time Series Input"),
                p("Enter an array of numbers, separated by commas. 
