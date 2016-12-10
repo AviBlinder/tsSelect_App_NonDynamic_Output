@@ -2,7 +2,7 @@ library(shiny)
 library(lubridate)
 library(forecast)
 library(xts)
-library(dygraphs)
+library(ggplot2)
 
 source("helpers.r")
 
@@ -30,7 +30,7 @@ ts1 <- ts_object
 
 print(ts(as.numeric(input_vector),
    start=c(2010,4),
-   frequency = 1),calendar = T)
+   frequency = freq),calendar = T)
 
 
 
@@ -61,12 +61,27 @@ colnames(ts1_xts) <- "original"
 ts1_xts;predicted_mts
 all <- cbind(ts1_xts, predicted_mts)
 all
+
+
 #####
-dygraph(all, main = title_name) %>%
-    dyAxis("x", drawGrid = FALSE) %>%
-    dySeries("original", label = "Actual") %>%
-    dySeries(c("lwr", "fit", "upr"),
-             label = "predictions") %>%
-    dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
-    dyRangeSelector()
+# dygraph(all, main = title_name) %>%
+#     dyAxis("x", drawGrid = FALSE) %>%
+#     dySeries("original", label = "Actual") %>%
+#     dySeries(c("lwr", "fit", "upr"),
+#              label = "predictions") %>%
+#     dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
+#     dyRangeSelector()
+
+
+ggseasonplot(ts1) + ggtitle("Seasonal Plot")
+autoplot(stl(ts1, s.window="periodic", robust=TRUE))
+
+autoplot(selected_model) + ggtitle(title_name)
+
+#ggmonthplot(ts1)
+#autoplot(ts1) + geom_forecast(h=36, level=c(95))
+
+
+fit <- ets(ts1)
+autoplot(fit)
 

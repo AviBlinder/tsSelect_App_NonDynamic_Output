@@ -2,7 +2,8 @@ library(shiny)
 library(lubridate)
 library(forecast)
 library(xts)
-library(dygraphs)
+library(ggplot2)
+library(Cairo)   # For nicer ggplot2 output when deployed on Linux
 library(shinythemes)
 
 source("helpers.r")
@@ -50,7 +51,9 @@ print (as.numeric(input$Frequency))
                             accuracy_measure = NULL)
         selected_model <- out_model[["selected_model_name"]]
         
-        plot_dygraph(ts_object,out_model,input$Slider)
+        #plot_dygraph(ts_object,out_model,input$Slider)
+        #autoplot(selected_model) + ggtitle(title_name)
+        
         }    
         
     })
@@ -87,17 +90,9 @@ print (as.numeric(input$Frequency))
         predicted_preps()
         })
     
-    output$dygraph_plot <- renderDygraph({
+    output$ggplot_plot <- renderPlot({
 
-        dygraph(predicted(), main = "Actual and Predicted Results") %>%
-            dyAxis("x", drawGrid = TRUE) %>%
-            dySeries("original", label = "Actual") %>%
-            dySeries(c("lwr", "fit", "upr"),
-                     label = " Predicted") %>%
-            dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
-            dyRangeSelector()
-        
-
-
+            autoplot(selected_model) + ggtitle(title_name)        
     })
+
 })
