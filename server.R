@@ -157,18 +157,26 @@ shinyServer(function(input, output) {
       paste("Time Series Objest =  ", ts_input_update())
     })
     
-    output$ggplot_plot2 <- renderPlot({
+    output$Seasonal_ggplot <- renderPlot({
       
       ggseasonplot(ts_input_update()) + ggtitle("Seasonal Plot")
       
     })
     
-    output$ggplot_plot2 <- renderPlot({
+    output$Seasonal_ggplot <- renderPlot({
       
       ggseasonplot(ts_input_sample()) + ggtitle("Seasonal Plot")
       
     })
     
+    #Render Decomposition Plot (Data = Seasonality + Trend + Remainder)
+    output$stl_plot <- renderPlot({
+      
+      autoplot(stl(ts_input_sample(), s.window="periodic", robust=TRUE)) +
+        ggplot_theme      
+      
+      
+    })
     
     output$ggplot_forecast <- renderPlot({
       output_model <- ts_input_sample_w_forecast()
@@ -185,13 +193,20 @@ shinyServer(function(input, output) {
       }
     })
     
-    #Render Decomposition Plot (Data = Seasonality + Trend + Remainder)
-    output$stl_plot <- renderPlot({
+##
+    output$forecast_figures <- renderTable({
+      output_model <- ts_input_sample_w_forecast()
+      forecasted_periods <- horizon_reactive()
+      selected_model_name <- output_model[["selected_model_name"]]
+      selected_model <- output_model[["model"]][[1]]
+      selected_model_forecast <- forecast(selected_model,h=forecasted_periods)
       
-      autoplot(stl(ts_input_sample(), s.window="periodic", robust=TRUE)) +
-        ggplot_theme      
-      
-      
+      if(length(selected_model_name) > 0){
+        predicted_mts <- as.xts(cbind(fit = selected_model_forecast[["mean"]],
+                                      lwr = selected_model_forecast[["lower"]][,2],
+                                      upr = selected_model_forecast[["upper"]][,2]))
+        
+      }
     })
     
   }

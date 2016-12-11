@@ -3,3 +3,8 @@ body {
   background-color: #d2e5f2;
 }
 
+
+strong { 
+    font-weight: bold;
+    color : #0000e6;
+}

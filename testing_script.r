@@ -46,6 +46,9 @@ forecasted_periods <- 10
 selected_model <- output_model[["model"]][[1]]
 selected_model <- forecast(selected_model,h=forecasted_periods)
 autoplot(selected_model)
+x1 <- as.xts((selected_model[["mean"]]))
+index(x1)
+coredata(x1)
 
 model_name <- output_model[["selected_model_name"]]
 
@@ -55,6 +58,8 @@ title_name
 predicted_mts <- as.xts(cbind(fit = selected_model[["mean"]],
                               lwr = selected_model[["lower"]][,2],
                               upr = selected_model[["upper"]][,2]))
+library(xtable)
+as.data.frame(predicted_mts)
 
 ts1_xts <- as.xts(ts1)
 ts1_xts
