@@ -3,9 +3,9 @@ title: tsSelect_app-NonDynamicOutput
 account: aviblinder
 server: shinyapps.io
 appId: 143884
-bundleId: 643942
+bundleId: 643954
 url: https://aviblinder.shinyapps.io/tsselect_app-nondynamicoutput/
-when: 1481461105.8715
+when: 1481461872.61343
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: dygraphs_samples.r|fourier_sample.r|main.r|testing_script.r|data/sales_data.txt

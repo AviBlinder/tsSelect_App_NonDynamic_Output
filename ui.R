@@ -69,14 +69,29 @@ mainPanel(
 
               tabPanel(strong("Forecast Plot"),
                        br(),
-                       p("This panel displays a plot only if the 'Execute Forecast Model' button is marked."),
+                       tags$div(
+                         HTML(paste("This panel displays a plot only if the ", 
+                                    tags$span(style="color:red", "Execute Forecast Models"), 
+                                    " checkbox is marked and you press the ",
+                                    tags$span(style="color:red", "Time Series Plots"),
+                                    " button !",
+                                    sep = ""))
+                       ),
                        br(),
                        p("Please be patient, more that 16 models are being executed in the background"),
                        plotOutput("ggplot_forecast"),
                        br()
                       ),
               tabPanel(strong("Forecast Data"),
-                       p("This panel displays a plot only if the 'Execute Forecast Model' button is marked."),
+                       br(),
+                       tags$div(
+                         HTML(paste("This panel displays a plot only if the ", 
+                                    tags$span(style="color:red", "Execute Forecast Models"), 
+                                    " checkbox is marked and you press the ",
+                                    tags$span(style="color:red", "Time Series Plots"),
+                                    " button !",
+                                    sep = ""))
+                       ),
                        br(),
                        p("Please be patient, more that 16 models are being executed in the background"),
                        tableOutput("forecast_figures"),
