@@ -8,10 +8,24 @@ library(shinythemes)
 
 source("helpers.r")
 
-input_sample <- c("2787", "3891", "3179", "2011", "1636", "1580" ,"1489", 
-            "1300" ,"1356", "1653" ,"2013", "2823", 
-            "2933", "2889", "2938", "2497", "1870", 
-            "1726", "1607", "1545", "1396", "1787", "2076" ,"2837")
+  
+input_sample <- c("112","118","132","129","121","135","148","148","136",
+                  "119","104","118","115","126","141","135","125",
+                  "149","170","170","158", "133","114","140","145","150",
+                  "178","163","172","178","199","199","184","162",
+                  "146","166","171","180","193","181","183","218", 
+                  "230","242","209","191","172","194","196","196","236",
+                  "235","229","243","264","272","237","211","180","201",
+                  "204","188","235", "227","234","264","302","293")
+
+ggplot_theme <- theme( 
+  panel.background = element_rect(fill = '#F3ECE2'), 
+  plot.background = element_rect(fill = '#F3ECE2'), 
+  panel.grid.major = element_line(color = "#DFDDDA"), 
+  panel.grid.minor = element_line(color = "#DFDDDA"),
+  axis.title.x = element_text(color = "#B2B0AE"),
+  axis.title.y = element_text(color = "#B2B0AE"),
+  title = element_text(color = "#606060") )
 
 
 # Define server logic required to draw a histogram
@@ -39,7 +53,7 @@ shinyServer(function(input, output) {
     
     
     
-    ts_input_update <- eventReactive(input$go, {
+    ts_input_update <- eventReactive(input$TS_Analysis, {
       ts_input <- input$ts_input
       if (input$ts_input %in% c("0" , "")){
         input_ts <- input_sample
@@ -57,9 +71,40 @@ shinyServer(function(input, output) {
       
       
     })
-    
-    ts_input_sample <- eventReactive(input$Sample_TS, {
+
+    ts_input_w_forecast <- eventReactive(input$TS_Analysis, {
       input_ts <- input_sample
+      
+      #Stript input from comma separators and trim spaces    
+      input_vector <- split_input(input_ts)
+      
+      ts_object <- create_ts(
+        input_data = as.numeric(input_vector),
+        start_date = as.Date(date_reactive()),
+        frequency_date = as.numeric(frequency_reactive()))
+      
+      if(forecast_checkbox()){
+        out_model <- run_models(ts1 = ts_object,
+                                accuracy_measure = NULL)
+        #        selected_model <- out_model[["selected_model_name"]]
+        
+        
+      }
+    })
+    
+    
+        
+    ts_input_sample <- eventReactive(input$Analyze_TS, {
+      
+      ts_input <- input$ts_input
+      if (input$ts_input %in% c("0" , "")){
+        input_ts <- input_sample
+      } else {
+        input_ts <- input$ts_input
+      }
+      
+#      input_ts <- input_sample
+      
 
       #Stript input from comma separators and trim spaces    
       input_vector <- split_input(input_ts)
@@ -72,7 +117,7 @@ shinyServer(function(input, output) {
     })
     
 
-    ts_input_sample_w_forecast <- eventReactive(input$Sample_TS, {
+    ts_input_sample_w_forecast <- eventReactive(input$Analyze_TS, {
       input_ts <- input_sample
       
       #Stript input from comma separators and trim spaces    
@@ -114,21 +159,40 @@ shinyServer(function(input, output) {
     
     output$ggplot_plot2 <- renderPlot({
       
+      ggseasonplot(ts_input_update()) + ggtitle("Seasonal Plot")
+      
+    })
+    
+    output$ggplot_plot2 <- renderPlot({
+      
       ggseasonplot(ts_input_sample()) + ggtitle("Seasonal Plot")
       
     })
     
+    
     output$ggplot_forecast <- renderPlot({
       output_model <- ts_input_sample_w_forecast()
       forecasted_periods <- horizon_reactive()
+      selected_model_name <- output_model[["selected_model_name"]]
       selected_model <- output_model[["model"]][[1]]
-      selected_model <- forecast(selected_model,h=forecasted_periods)
+      selected_model_forecast <- forecast(selected_model,h=forecasted_periods)
 
-      
-      autoplot(selected_model) + 
-        ggtitle(paste0("Selected Model: ",output_model[["selected_model_name"]]))
+      if(length(selected_model_name) > 0){
+          autoplot(selected_model_forecast) + 
+        ggtitle(paste0("Selected Model: ",output_model[["selected_model_name"]])) +
+          ggplot_theme
+          
+      }
     })
     
+    #Render Decomposition Plot (Data = Seasonality + Trend + Remainder)
+    output$stl_plot <- renderPlot({
+      
+      autoplot(stl(ts_input_sample(), s.window="periodic", robust=TRUE)) +
+        ggplot_theme      
+      
+      
+    })
     
   }
 )
