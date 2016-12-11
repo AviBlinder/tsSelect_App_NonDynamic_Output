@@ -42,7 +42,7 @@ selected_model <- out_model[["model"]][[1]]
 
 ###
 output_model <- out_model
-forecasted_periods <- 10
+forecasted_periods <- 20
 selected_model <- output_model[["model"]][[1]]
 selected_model <- forecast(selected_model,h=forecasted_periods)
 autoplot(selected_model)

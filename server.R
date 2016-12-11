@@ -202,9 +202,9 @@ shinyServer(function(input, output) {
       selected_model_forecast <- forecast(selected_model,h=forecasted_periods)
       
       if(length(selected_model_name) > 0){
-        predicted_mts <- as.xts(cbind(fit = selected_model_forecast[["mean"]],
+        predicted_mts <- as.data.frame(as.xts(cbind(fit = selected_model_forecast[["mean"]],
                                       lwr = selected_model_forecast[["lower"]][,2],
-                                      upr = selected_model_forecast[["upper"]][,2]))
+                                      upr = selected_model_forecast[["upper"]][,2])))
         
       }
     })
