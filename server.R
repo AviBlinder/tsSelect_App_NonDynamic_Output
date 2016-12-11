@@ -19,12 +19,12 @@ input_sample <- c("112","118","132","129","121","135","148","148","136",
                   "204","188","235", "227","234","264","302","293")
 
 ggplot_theme <- theme( 
-  panel.background = element_rect(fill = '#F3ECE2'), 
-  plot.background = element_rect(fill = '#F3ECE2'), 
+  panel.background = element_rect(fill = '#fce3bd'), 
+  plot.background = element_rect(fill = '#fce3bd'), 
   panel.grid.major = element_line(color = "#DFDDDA"), 
   panel.grid.minor = element_line(color = "#DFDDDA"),
-  axis.title.x = element_text(color = "#B2B0AE"),
-  axis.title.y = element_text(color = "#B2B0AE"),
+  axis.title.x = element_text(color = "#8c8c8c"),
+  axis.title.y = element_text(color = "#8c8c8c"),
   title = element_text(color = "#606060") )
 
 
@@ -159,13 +159,9 @@ shinyServer(function(input, output) {
     
     output$Seasonal_ggplot <- renderPlot({
       
-      ggseasonplot(ts_input_update()) + ggtitle("Seasonal Plot")
-      
-    })
-    
-    output$Seasonal_ggplot <- renderPlot({
-      
-      ggseasonplot(ts_input_sample()) + ggtitle("Seasonal Plot")
+      ggseasonplot(ts_input_sample(),year.labels=TRUE,continuous=FALSE) + 
+        ggtitle("Seasonal Plot") +
+        ggplot_theme
       
     })
     
