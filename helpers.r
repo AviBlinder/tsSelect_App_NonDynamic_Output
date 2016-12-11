@@ -259,10 +259,9 @@ run_models <- function(ts1,accuracy_measure = NULL){
         }
     }
     
-#    print ("accuracies : ")
-#    print (accuracies)
     print ("end of step 3 - selected model = ")
     print (names(selected_model))
+
     list(selected_model_name = names(selected_model),
                       model=all_models[names(all_models) == names(selected_model)])
 }
@@ -297,3 +296,17 @@ plot_dygraph <- function(ts1,output_model,forecasted_periods){
     all <- cbind(ts1_xts, predicted_mts)
  
 }
+
+
+#Stript input from comma separators and trim spaces        
+split_input <- function(input_string){
+  input_unstringed <- c() 
+  input_unstringed <- unlist(strsplit(input_string,","))
+  input_unstringed  <- trimws(input_unstringed,which = "both")          
+  
+  return(input_unstringed)
+}
+  
+
+
+

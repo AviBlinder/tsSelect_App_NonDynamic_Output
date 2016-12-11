@@ -9,8 +9,12 @@ shinyUI(fluidPage(
   
   titlePanel(""),
   
-  plotOutput("ggplot_plot") ,
+        textOutput("date1"),
+#        textOutput("time_series_input"),
   
+        plotOutput("ggplot_plot2") ,
+        plotOutput("ggplot_forecast"),
+
   hr(),
   
   fluidRow(
@@ -19,7 +23,7 @@ shinyUI(fluidPage(
            dateInput("date",  value = "2014-01-01",label=""),
            
            h4("Number of Forecasted Periods"),
-           sliderInput("Slider",label="", min = 1, 
+           sliderInput("Forecast_Periods",label="", min = 1, 
                        max = 20, value = 10)
     ),
     column(4,offset = 2,
@@ -29,12 +33,21 @@ shinyUI(fluidPage(
                           "Monthly" = 12,
                           "Quarterly" = 4 
                         ),
-                        selected = 12),
+                        selected = 4),
            h4("Time Series Input"),
            p("Enter an array of numbers, separated by commas.
                    Zero values are not allowed.") ,
            
            textInput("ts_input",label=""), 
-           value = "0"))
+           value = "0")),
+
+#Execute Best Forecast
+           checkboxInput("forecast_checkbox", label = "Execute Forecast Models", 
+                         value = FALSE),
+  
+           actionButton("Sample_TS", "Sample Time Series Plot"),
+           actionButton("go", "Time Series Input Updated")
+  
+            
   
 ))

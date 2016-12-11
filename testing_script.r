@@ -45,6 +45,7 @@ output_model <- out_model
 forecasted_periods <- 10
 selected_model <- output_model[["model"]][[1]]
 selected_model <- forecast(selected_model,h=forecasted_periods)
+autoplot(selected_model)
 
 model_name <- output_model[["selected_model_name"]]
 
