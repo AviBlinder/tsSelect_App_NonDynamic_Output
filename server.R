@@ -22,6 +22,7 @@ ggplot_theme <- theme(
   plot.background = element_rect(fill = '#fce3bd'), 
   panel.grid.major = element_line(color = "#DFDDDA"), 
   panel.grid.minor = element_line(color = "#DFDDDA"),
+  plot.title = element_text(hjust = 0.5),
   axis.title.x = element_text(color = "#8c8c8c"),
   axis.title.y = element_text(color = "#8c8c8c"),
   title = element_text(color = "#303030") )
