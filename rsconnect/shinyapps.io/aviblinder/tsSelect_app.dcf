@@ -1,11 +1,11 @@
 name: tsSelect_app
-title:
+title: tsSelect_app - NonDynamic Output
 account: aviblinder
 server: shinyapps.io
 appId: 140283
-bundleId: 634796
+bundleId: 643914
 url: https://aviblinder.shinyapps.io/tsSelect_app/
-when: 1480791936.54622
+when: 1481459357.04579
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: dygraphs_samples.r|fourier_sample.r|main.r|testing_script.r|data/sales_data.txt|www/NA
+ignoredFiles: dygraphs_samples.r|fourier_sample.r|main.r|testing_script.r|data/sales_data.txt

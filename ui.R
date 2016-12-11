@@ -52,18 +52,20 @@ sidebarLayout(sidebarPanel(
 mainPanel(
   
   tabsetPanel(position=c("right"),
-              tabPanel(strong("Seasonal Plot"), 
-                       br(),
-                       plotOutput("Seasonal_ggplot") ,
-                       br()
-                       ),
               
               tabPanel(strong("Seasonal Decomposition Plot"), 
                        br(),
                        plotOutput("stl_plot"),
-                       p("..."),
-                       br()
+                       br(),
+                       p("Decomposition of Time Series data into seasonal, trend and irregular components")
                        ),
+              
+              tabPanel(strong("Seasonal Plot"), 
+                       br(),
+                       plotOutput("Seasonal_ggplot") ,
+                       br()
+                      ),
+              
 
               tabPanel(strong("Forecast Plot"),
                        br(),
