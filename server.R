@@ -25,7 +25,7 @@ ggplot_theme <- theme(
   panel.grid.minor = element_line(color = "#DFDDDA"),
   axis.title.x = element_text(color = "#8c8c8c"),
   axis.title.y = element_text(color = "#8c8c8c"),
-  title = element_text(color = "#606060") )
+  title = element_text(color = "#303030") )
 
 
 # Define server logic required to draw a histogram
@@ -184,7 +184,13 @@ shinyServer(function(input, output) {
       if(length(selected_model_name) > 0){
           autoplot(selected_model_forecast) + 
         ggtitle(paste0("Selected Model: ",output_model[["selected_model_name"]])) +
-          ggplot_theme
+          ggplot_theme +
+          ylab("") +
+          xlab("") + 
+          ggtitle(paste0("Time Series - Forecast of ",forecasted_periods , " periods"))
+          
+        
+          
           
       }
     })
