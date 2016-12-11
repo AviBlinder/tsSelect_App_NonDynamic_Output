@@ -3,7 +3,6 @@ library(lubridate)
 library(forecast)
 library(xts)
 library(ggplot2)
-library(Cairo)   # For nicer ggplot2 output when deployed on Linux
 library(shinythemes)
 
 source("helpers.r")
